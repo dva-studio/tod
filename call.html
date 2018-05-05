@@ -15,6 +15,9 @@
     
 </head>
 <body>
+    
+    
+    <button onclick="begin()">Click me</button>
 <div class = "bodyDiv">
     
     <div class="md-modal md-effect-13" id="modal-13">
@@ -80,7 +83,28 @@
 <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
 <script src="https://dva-studio.github.io/tod/js/webrtc.js"></script>
 <script type="text/javascript">
-var video_out = document.getElementById("vid-box");
+    
+    var foo = location.hash.substr(1);
+    var video_out = document.getElementById("vid-box");
+    
+    function begin ()
+    {
+        var phone = window.phone = PHONE({
+	    number        : foo || "Anonymous", // listen on username line else Anonymous
+	   publish_key   : 'pub-c-561a7378-fa06-4c50-a331-5c0056d0163c', // Your Pub Key
+	    subscribe_key : 'sub-c-17b7db8a-3915-11e4-9868-02ee2ddab7fe', // Your Sub Key,
+        ssl: true
+	});	
+	phone.ready(function(){form.username.style.background="#55ff5b"; form.login_submit.hidden="true"; });
+	phone.receive(function(session){
+	    session.connected(function(session) { video_out.appendChild(session.video); showModal();});
+	    session.ended(function(session) { video_out.innerHTML=''; });
+	});
+    }
+	
+    
+    
+    
 function login(form) {
 	var phone = window.phone = PHONE({
 	    number        : form.username.value || "Anonymous", // listen on username line else Anonymous
