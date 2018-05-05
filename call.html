@@ -15,10 +15,10 @@
     
 </head>
 <body>
+  <video id="remoteVideo" autoplay></video>
     
-    
-    <button onclick="begin('bob')">Alice</button>
-    <button onclick="begin('alice')">Bob</button>
+    <button onclick="begin('bob')">Begin as Bob</button>
+    <button onclick="begin('alice')">Begin as Alice</button>
     <button onclick="call('bob')">Call Bob</button>
     <button onclick="call('alice')">Call Alice</button>
 
@@ -90,6 +90,7 @@
     
     
     var video_out = document.getElementById("vid-box");
+    var videoWindow = document.getElementById("remoteVideo");
     
     function begin (n)
     {
@@ -103,7 +104,10 @@
         });	    
 	   //phone.ready(function(){form.username.style.background="#55ff5b"; form.login_submit.hidden="true"; });
         phone.receive(function(session){
-            session.connected(function(session) { video_out.appendChild(session.video); showModal();});
+            
+            session.connected(function(session) { 
+                videoWindow.srcObject = session.video.srcObject; //video_out.appendChild(session.video); showModal();
+                                                });
 	       session.ended(function(session) { video_out.innerHTML=''; });
 	   });    
         if (n == "bob")
