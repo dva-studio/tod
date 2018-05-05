@@ -341,7 +341,7 @@ var PHONE = window.PHONE = function(config) {
         // Video Settings
         video.width  = snap.width;
         video.height = snap.height;
-        video.src    = URL.createObjectURL(stream);
+        video.srcObject    = stream;//URL.createObjectURL(stream);
         video.volume = 0.0;
         video.play();
 
@@ -371,7 +371,7 @@ var PHONE = window.PHONE = function(config) {
 
         vid.setAttribute( 'autoplay', 'autoplay' );
         vid.setAttribute( 'data-number', number );
-        vid.src = URL.createObjectURL(stream);
+        vid.srcObject = stream;
 
         talk.video = vid;
         talk.connect(talk);
