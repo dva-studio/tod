@@ -38,7 +38,7 @@
     -->
     
     <div class="videoContainer">
-        <video id="remoteVideo" autoplay onclick="go()"></video>
+        <video id="remoteVideo" autoplay></video>
     </div>
 </body>
 
@@ -57,7 +57,7 @@
     var videoWindow = document.getElementById("remoteVideo");
     
     // Get user parameter
-    var user = new URL(window.location).searchParams.get("user");
+    var user = new URL(window.location).searchParams.get("device");
     
     // Begin session using user name
     begin(user);
@@ -111,6 +111,10 @@
         phone.ready(function() { 
             // When local stream up and running, show local stream
             videoWindow.srcObject = phone.mystream;
+            if (user == 'bob')
+            {
+                call('alice');
+            }
         });
         
         phone.callstatus(function(foo) {
