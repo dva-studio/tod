@@ -54,13 +54,13 @@
 
 <script type="text/javascript">
     
-    var videoOffsetX = 0;
-    var videoOffsetY = 0;
+    var videoOffsetX = (getCookie("x") != null && !isNaN(getCookie("x"))) ? getCookie("x") : 0;
+    var videoOffsetY = (getCookie("y") != null && !isNaN(getCookie("y"))) ? getCookie("y") : 0;
     
     var videoTiltOffset = (getCookie("tilt") != null && !isNaN(getCookie("tilt"))) ? getCookie("tilt") : 0;
     var videoTiltSteps = 0.5;
     
-    var videoScale = 1;
+    var videoScale = (getCookie("scale") != null && !isNaN(getCookie("scale"))) ? getCookie("scale") : 0;
     var videoScaleSteps = 0.02;
     
     // Get reference to video element
@@ -75,7 +75,9 @@
     // Begin session using user name
     begin(user);
     
-    alert("Scale: " + getCookie("scale") + " Tilt: " + getCookie("tilt") + " X: " + getCookie("x") + " Y: " + getCookie("y"));
+    updateTransform();
+    
+    //alert("Scale: " + getCookie("scale") + " Tilt: " + getCookie("tilt") + " X: " + getCookie("x") + " Y: " + getCookie("y"));
     
     document.addEventListener('keydown', (event) => {
         const keyName = event.key;
@@ -123,11 +125,14 @@
         document.cookie = "x=" + videoOffsetX;
         document.cookie = "y=" + videoOffsetY;
         
-       // videoWindow.style.transform = "";
-        videoWindow.style.webkitTransform = "translate(" + videoOffsetX + "%, " + videoOffsetY + "%) rotateZ(" + videoTiltOffset + "deg) scale(" + videoScale + ", " + videoScale + ")";
+        updateTransform();
+        
     }, false);
 
-    
+    function updateTransform ()
+    {
+        videoWindow.style.webkitTransform = "translate(" + videoOffsetX + "%, " + videoOffsetY + "%) rotateZ(" + videoTiltOffset + "deg) scale(" + videoScale + ", " + videoScale + ")";
+    }
     
     function go ()
     {
