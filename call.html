@@ -119,7 +119,7 @@
             videoScale -= videoScaleSteps;
         }
         
-        if (keyName == "R" || keyName == "r")
+        if (keyName == "X" || keyName == "x")
         {
             videoScale = 1;
             videoOffsetX = 0;
@@ -127,7 +127,10 @@
             videoTiltOffset = 0;
         }
         
-        
+        if (keyName == "L" || keyName == "l")
+        {
+            alert("Scale: " + scale + "\r\nOffset: " + videoOffsetX + ", " + videoOffsetY + "\r\nTilt: " + videoTiltOffset);
+        }
         
         document.cookie = "scale=" + videoScale;
         document.cookie = "tilt=" + videoTiltOffset;
