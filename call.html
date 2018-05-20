@@ -61,6 +61,11 @@
     var videoTiltSteps = 0.5;
     
     var videoScale = (getCookie("videoscale") != null && !isNaN(getCookie("videoscale"))) ? Number(getCookie("videoscale")) : 100;
+    
+    // Ugly hack
+    if (videoScale == 0)
+        videoScale = 100;
+    
     var videoScaleSteps = 1;
     
     var hFlip = Number((getCookie("hflip") != null && !isNaN(getCookie("hflip"))) ? getCookie("hflip") : 0);
