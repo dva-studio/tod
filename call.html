@@ -63,6 +63,10 @@
     var videoScale = Number((getCookie("scale") != null && !isNaN(getCookie("scale"))) ? getCookie("scale") : 100);
     var videoScaleSteps = 1;
     
+    var hFlip = Number((getCookie("hflip") != null && !isNaN(getCookie("hflip"))) ? getCookie("hflip") : 0);
+    var vFlip = Number((getCookie("vflip") != null && !isNaN(getCookie("vflip"))) ? getCookie("vflip") : 0);
+    
+    
     // Get reference to video element
     var videoWindow = document.getElementById("remoteVideo");
     videoWindow.muted = true;
@@ -119,12 +123,26 @@
             videoScale -= videoScaleSteps;
         }
         
+        if (keyName == "A" || keyName == "a")
+        {
+            hFlip = (hFlip == 0) ? 1 : 0;
+        }
+        
+        if (keyName == "S" || keyName == "s")
+        {
+            vFlip = (vFlip == 0) ? 1 : 0;
+        }
+        
+
+        
         if (keyName == "X" || keyName == "x")
         {
             videoScale = 100;
             videoOffsetX = 0;
             videoOffsetY = 0;
             videoTiltOffset = 0;
+            vFlip = 0;
+            hFlip = 0;
         }
         
         if (keyName == "L" || keyName == "l")
@@ -136,6 +154,8 @@
         document.cookie = "tilt=" + videoTiltOffset;
         document.cookie = "x=" + videoOffsetX;
         document.cookie = "y=" + videoOffsetY;
+        document.cookie = "hflip=" + hFlip;
+        document.cookie = "vflip=" + vFlip;
         
         updateTransform();
         
@@ -143,7 +163,15 @@
 
     function updateTransform ()
     {
-        videoWindow.style.webkitTransform = "translate(" + videoOffsetX + "%, " + videoOffsetY + "%) rotateZ(" + videoTiltOffset + "deg) scale(" + (videoScale/100) + ", " + (videoScale/100) + ")";
+        var hScale = videoScale / 100;
+        if (hFlip == 1)
+            hScale = -hScale;
+
+        var vScale = videoScale / 100;
+        if (vFlip == 1)
+            vScale = -vScale;
+        
+        videoWindow.style.webkitTransform = "translate(" + videoOffsetX + "%, " + videoOffsetY + "%) rotateZ(" + videoTiltOffset + "deg) scale(" + hScale + ", " + vScale + ")";
     }
     
     function go ()
