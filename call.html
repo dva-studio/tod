@@ -119,7 +119,10 @@
         }
         
         
-        document.cookie = "scale=" + videoScale + ";tilt=" + videoTiltOffset + ";x=" + videoOffsetX + ";y=" + videoOffsetY + ";";
+        document.cookie = "scale=" + videoScale;
+        document.cookie = "tilt=" + videoTiltOffset;
+        document.cookie = "x=" + videoOffsetX;
+        document.cookie = "y=" + videoOffsetY;
         
        // videoWindow.style.transform = "";
         videoWindow.style.webkitTransform = "translate(" + videoOffsetX + "%, " + videoOffsetY + "%) rotateZ(" + videoTiltOffset + "deg) scale(" + videoScale + ", " + videoScale + ")";
