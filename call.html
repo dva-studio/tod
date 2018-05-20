@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>PubRTC + Mobile</title>
+    <title>Table of Discussion WebRTC</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,22 +11,27 @@
     <script src="https://dva-studio.github.io/tod/js/modernizr.custom.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://dva-studio.github.io/tod/stylesheets/normalize.css" />
     <style>
+        body {
+            overflow:hidden;
+            background-color: black;
+        }
         .videoContainer 
         {
             position:absolute;
             height:100%;
             width:100%;
             overflow: hidden;
+            transform: translate(0%, 0%);
 }
         video 
         {
             min-width: 100%;
             min-height: 100%;
             transform: translate(0%, -0%);
+            -webkit-transform:rotateZ(0deg);
+            -webkit-transform:scale()
         }
     </style>
-
-    
 </head>
 <body>
     <!--
@@ -37,7 +42,7 @@
         <button onclick="call('bob')">Call Bob</button>
     -->
     
-    <div class="videoContainer">
+    <div id="container" class="videoContainer">
         <video id="remoteVideo" autoplay></video>
     </div>
 </body>
@@ -52,10 +57,17 @@
     var videoOffsetX = 0;
     var videoOffsetY = 0;
     
+    var videoTiltOffset = 0;
+    var videoTiltSteps = 0.5;
+    
+    var videoScale = 1;
+    var videoScaleSteps = 0.02;
     
     // Get reference to video element
     var videoWindow = document.getElementById("remoteVideo");
     videoWindow.muted = true;
+    
+    var videoContainer = document.getElementById("container");
     
     // Get user parameter
     var user = new URL(window.location).searchParams.get("device");
@@ -63,21 +75,23 @@
     // Begin session using user name
     begin(user);
     
+
+    alert("Scale: " + getCookie("scale") + " Tilt: " + getCookie("tilt") + " X: " + getCookie("x") + " Y: " + getCookie("y"));
     
     document.addEventListener('keydown', (event) => {
         const keyName = event.key;
         if (keyName == "ArrowUp")
         {
-            videoOffsetY++;
+            videoOffsetY--;
         }
         if (keyName == "ArrowDown")
         {
-            if (videoOffsetY > 0)
-                videoOffsetY--;
+            //if (videoOffsetY > 0)
+                videoOffsetY++;
         }
         if (keyName == "ArrowLeft")
         {
-            if (videoOffsetX > 0)
+            //if (videoOffsetX > 0)
             videoOffsetX--;
         }
         if (keyName == "ArrowRight")
@@ -85,7 +99,30 @@
             videoOffsetX++;
         }
         
-        videoWindow.style.transform = "translate(0%, -" + videoOffsetY + "%)";
+        if (keyName == "Q" || keyName == "q")
+        {
+            videoTiltOffset += videoTiltSteps;
+        }
+        if (keyName == "W" || keyName == "w")
+        {
+            videoTiltOffset -= videoTiltSteps;
+        }
+        
+        
+        if (keyName == "E" || keyName == "e")
+        {
+            videoScale += videoScaleSteps;
+        }
+        if (keyName == "D" || keyName == "d")
+        {
+            videoScale -= videoScaleSteps;
+        }
+        
+        
+        document.cookie = "scale=" + videoScale + ";tilt=" + videoTiltOffset + ";x=" + videoOffsetX + ";y=" + videoOffsetY + ";";
+        
+       // videoWindow.style.transform = "";
+        videoWindow.style.webkitTransform = "translate(" + videoOffsetX + "%, " + videoOffsetY + "%) rotateZ(" + videoTiltOffset + "deg) scale(" + videoScale + ", " + videoScale + ")";
     }, false);
 
     
@@ -175,5 +212,54 @@
             return false;
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function checkCookie() {
+    var user = getCookie("username");
+    if (user != "") {
+        alert("Welcome again " + user);
+    } else {
+        user = prompt("Please enter your name:", "");
+        if (user != "" && user != null) {
+            setCookie("username", user, 365);
+        }
+    }
+}
+    
+    
+    
+    
+    
+    
+    
 </script>
 </html>
