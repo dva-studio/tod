@@ -60,8 +60,8 @@
     var videoTiltOffset = (getCookie("tilt") != null && !isNaN(getCookie("tilt"))) ? getCookie("tilt") : 0;
     var videoTiltSteps = 0.5;
     
-    var videoScale = (getCookie("scale") != null && !isNaN(getCookie("scale"))) ? getCookie("scale") : 1;
-    var videoScaleSteps = 0.02;
+    var videoScale = (getCookie("scale") != null && !isNaN(getCookie("scale"))) ? getCookie("scale") : 100;
+    var videoScaleSteps = 1;
     
     // Get reference to video element
     var videoWindow = document.getElementById("remoteVideo");
@@ -121,7 +121,7 @@
         
         if (keyName == "X" || keyName == "x")
         {
-            videoScale = 1;
+            videoScale = 100;
             videoOffsetX = 0;
             videoOffsetY = 0;
             videoTiltOffset = 0;
@@ -129,7 +129,7 @@
         
         if (keyName == "L" || keyName == "l")
         {
-            alert("Scale: " + videoScale + "\r\nOffset: " + videoOffsetX + ", " + videoOffsetY + "\r\nTilt: " + videoTiltOffset);
+            alert("Scale: " + videoScale + "\nOffset: " + videoOffsetX + ", " + videoOffsetY + "\nTilt: " + videoTiltOffset);
         }
         
         document.cookie = "scale=" + videoScale;
@@ -143,7 +143,7 @@
 
     function updateTransform ()
     {
-        videoWindow.style.webkitTransform = "translate(" + videoOffsetX + "%, " + videoOffsetY + "%) rotateZ(" + videoTiltOffset + "deg) scale(" + videoScale + ", " + videoScale + ")";
+        videoWindow.style.webkitTransform = "translate(" + videoOffsetX + "%, " + videoOffsetY + "%) rotateZ(" + videoTiltOffset + "deg) scale(" + (videoScale/100) + ", " + (videoScale/100) + ")";
     }
     
     function go ()
