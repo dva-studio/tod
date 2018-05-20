@@ -60,7 +60,7 @@
     var videoTiltOffset = (getCookie("tilt") != null && !isNaN(getCookie("tilt"))) ? getCookie("tilt") : 0;
     var videoTiltSteps = 0.5;
     
-    var videoScale = (getCookie("scale") != null && !isNaN(getCookie("scale"))) ? getCookie("scale") : 0;
+    var videoScale = (getCookie("scale") != null && !isNaN(getCookie("scale"))) ? getCookie("scale") : 1;
     var videoScaleSteps = 0.02;
     
     // Get reference to video element
@@ -102,11 +102,11 @@
         
         if (keyName == "Q" || keyName == "q")
         {
-            videoTiltOffset += videoTiltSteps;
+            videoTiltOffset -= videoTiltSteps;
         }
         if (keyName == "W" || keyName == "w")
         {
-            videoTiltOffset -= videoTiltSteps;
+            videoTiltOffset += videoTiltSteps;
         }
         
         
@@ -118,6 +118,15 @@
         {
             videoScale -= videoScaleSteps;
         }
+        
+        if (keyName == "R" || keyName == "r")
+        {
+            videoScale = 1;
+            videoOffsetX = 0;
+            videoOffsetY = 0;
+            videoTiltOffset = 0;
+        }
+        
         
         
         document.cookie = "scale=" + videoScale;
