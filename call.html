@@ -57,7 +57,7 @@
     var videoOffsetX = 0;
     var videoOffsetY = 0;
     
-    var videoTiltOffset = (getCookie("tilt") != null) ? getCookie("tilt") : 0;
+    var videoTiltOffset = (getCookie("tilt") != null && !isNaN(getCookie("tilt"))) ? getCookie("tilt") : 0;
     var videoTiltSteps = 0.5;
     
     var videoScale = 1;
@@ -75,8 +75,7 @@
     // Begin session using user name
     begin(user);
     
-
-    alert("Scale: " + getCookie("scale") + " Tilt: " + getCookie("tilt") + " X: " + getCookie("x") + " Y: " + getCookie("y"));
+    //alert("Scale: " + getCookie("scale") + " Tilt: " + getCookie("tilt") + " X: " + getCookie("x") + " Y: " + getCookie("y"));
     
     document.addEventListener('keydown', (event) => {
         const keyName = event.key;
