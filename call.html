@@ -57,7 +57,7 @@
     var videoOffsetX = 0;
     var videoOffsetY = 0;
     
-    var videoTiltOffset = 0;
+    var videoTiltOffset = (getCookie("tilt") != null) ? getCookie("tilt") : 0;
     var videoTiltSteps = 0.5;
     
     var videoScale = 1;
