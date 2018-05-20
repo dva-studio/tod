@@ -60,7 +60,7 @@
     var videoTiltOffset = Number((getCookie("tilt") != null && !isNaN(getCookie("tilt"))) ? getCookie("tilt") : 0);
     var videoTiltSteps = 0.5;
     
-    var videoScale = Number((getCookie("scale") != null && !isNaN(getCookie("scale"))) ? getCookie("scale") : 100);
+    var videoScale = (getCookie("videoscale") != null && !isNaN(getCookie("videoscale"))) ? Number(getCookie("videoscale")) : 100;
     var videoScaleSteps = 1;
     
     var hFlip = Number((getCookie("hflip") != null && !isNaN(getCookie("hflip"))) ? getCookie("hflip") : 0);
@@ -150,7 +150,7 @@
             alert("Scale: " + videoScale + "\nOffset: " + videoOffsetX + ", " + videoOffsetY + "\nTilt: " + videoTiltOffset);
         }
         
-        document.cookie = "scale=" + videoScale;
+        document.cookie = "videoscale=" + videoScale;
         document.cookie = "tilt=" + videoTiltOffset;
         document.cookie = "x=" + videoOffsetX;
         document.cookie = "y=" + videoOffsetY;
